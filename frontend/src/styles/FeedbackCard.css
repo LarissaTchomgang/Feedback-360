@@ -1,0 +1,118 @@
+.feedback-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.25s ease;
+}
+
+.feedback-card.expanded {
+  background-color: #f7faff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cat-pill {
+  background-color: #0072e6;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.comment {
+  margin-top: 8px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* --- Bouton flèche --- */
+.toggle-details-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: #0072e6;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s;
+}
+
+.toggle-details-btn:hover {
+  transform: scale(1.2);
+  color: #005bb5;
+}
+
+/* --- Détails déroulants --- */
+.feedback-details {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: #eef5ff;
+  border-radius: 8px;
+  border-left: 3px solid #0072e6;
+  animation: fadeIn 0.25s ease;
+}
+
+.feedback-details h4 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: #0072e6;
+}
+
+.feedback-details ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.feedback-details li {
+  margin-bottom: 4px;
+}
+
+/* --- Animation d’apparition --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Bouton supprimer --- */
+.mini-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mini-btn:hover {
+  background-color: #d32f2f;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 77, 77, 0.1);
+  transform: scale(1.1);
+}

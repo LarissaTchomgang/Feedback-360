@@ -1,0 +1,151 @@
+.fb-form {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.lbl {
+  font-weight:600;
+  color: #22303a;
+  margin-top:6px;
+}
+
+.select {
+  width:100%;
+  padding:14px 12px;
+  border-radius:12px;
+  border:1px solid #eceff2;
+  background:#f5f6f8;
+  font-size:14px;
+}
+
+.txt {
+  width:100%;
+  min-height:140px;
+  padding:16px;
+  border-radius:12px;
+  border:1px solid #eceff2;
+  background:#fbfcfd;
+  resize:vertical;
+  font-size:14px;
+  color:#0b1720;
+}
+
+.emoji-row {
+  display:flex;
+  justify-content:space-between;
+  padding: 8px 40px;
+  align-items:center;
+}
+
+.emoji-btn {
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  padding:8px;
+  border-radius:999px;
+  transition: transform .16s, box-shadow .16s;
+}
+
+.emoji-btn .emoji { font-size:28px; display:inline-block; }
+
+.emoji-btn:hover { transform: translateY(-4px); }
+.emoji-btn.active {
+  transform:scale(1.15);
+  box-shadow: 0 6px 20px rgba(0,87,160,0.12);
+}
+
+.submit-btn {
+  margin-top:6px;
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:0;
+  background: linear-gradient(180deg, #2f9aff, #0072e6);
+  color: white;
+  font-weight:700;
+  font-size:16px;
+}
+
+/* --- Grille de catégories --- */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.category-card {
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+  width: 300px;              /* ✅ largeur augmentée */
+  height: 200px;             /* ✅ hauteur augmentée */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,87,160,0.15);
+}
+
+.category-card.selected {
+  border: 2px solid #0057A0;
+  box-shadow: 0 0 0 3px rgba(0,87,160,0.1);
+}
+
+.category-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+    object-position: center;
+}
+
+.category-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #0b1720;
+  padding: 10px;
+  background: #f9fafb;
+}
+
+/* --- Disposition en deux colonnes --- */
+.feedback-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.feedback-left,
+.feedback-right {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* Champs Nom / Email */
+.input-field {
+  width: 100%;
+  padding: 14px 12px;
+  border-radius: 12px;
+  border: 1px solid #eceff2;
+  background: #fbfcfd;
+  font-size: 14px;
+  color: #0b1720;
+  margin-bottom: 12px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #0072e6;
+  box-shadow: 0 0 0 3px rgba(0,114,230,0.15);
+}

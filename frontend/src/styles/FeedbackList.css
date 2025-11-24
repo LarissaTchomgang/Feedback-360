@@ -1,0 +1,76 @@
+.summary-row { border-radius:12px; }
+.category-pill {
+  background: #f2fbf7;
+  color: #0a7a5b;
+  padding:8px 10px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* wrapper */
+.summary-list { display:flex; flex-direction:column; gap:14px; }
+
+/* résumé par catégorie (carte) */
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(2,6,23,0.03);
+  border: 1px solid #f0f3f7;
+}
+
+/* top row of the summary card */
+.summary-top {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* left: category pill + count */
+.summary-left { display:flex; align-items:center; gap:12px; }
+.category-pill {
+  background:#eef9f5;
+  color:#0a7a5b;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:600;
+}
+.summary-count { color: #556; font-size:0.95rem; }
+
+/* right: average rating + toggle */
+.summary-right { display:flex; align-items:center; gap:12px; }
+
+.summary-rating { display:flex; align-items:center; gap:6px; }
+.avg-text { font-weight:700; color:#22303a; margin-left:6px; }
+
+/* toggle (flèche) */
+.summary-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #0072e6;
+  padding: 6px;
+  border-radius: 8px;
+  transition: transform 0.15s ease, background 0.15s;
+}
+.summary-toggle:hover { transform: translateY(-2px); background: rgba(0,114,230,0.05); }
+
+/* expanded panel (hidden if not open) */
+.summary-expanded { overflow: hidden; max-height: 0; transition: max-height 0.35s ease; }
+.summary-expanded.open { max-height: 1600px; /* large enough to contain inner items */ }
+
+/* inner list inside expanded panel */
+.summary-expanded-list {
+  margin-top: 12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+/* full list styling (global chronological list) */
+.full-list { display:flex; flex-direction:column; gap:12px; }
+
+/* small empty placeholder */
+.empty { padding: 18px; color: var(--muted, #7a7a7a); text-align:center; }
+

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1a7cf064-73a9-41fe-bf21-9a9ba61b2d6d",
+    "category": "Formation TypeScript",
+    "comment": "pas bon",
+    "rating": 3,
+    "author": "lari",
+    "email": "lari@gmail.com",
+    "createdAt": "2025-11-05T08:54:59.532072"
+  },
+  {
+    "id": "dac4eecc-522e-4ffd-99c8-973315e7bbc2",
+    "category": "Formation React",
+    "comment": "Formation très intérressante et adaptée aux novices. Je suis pleinement satisfaite",
+    "rating": 5,
+    "author": "Lucindaaachouu",
+    "email": "lucie@gmail.com",
+    "createdAt": "2025-11-06T17:52:10.058423"
+  },
+  {
+    "id": "c6b58b51-ab6d-4a31-9740-f1dba4b44ebe",
+    "category": "Formation React",
+    "comment": "Formation moyenne. Peut mieux faire",
+    "rating": 3,
+    "author": "fred",
+    "email": "fred@gmail.com",
+    "createdAt": "2025-11-06T17:52:47.645186"
+  },
+  {
+    "id": "b5cdb9b0-571e-4919-969b-e46775619c8c",
+    "category": "Produit - SmartPhone",
+    "comment": "Offres intéressantes. Je suis conquis. Le rapport qualité/prix est exceptionnel",
+    "rating": 4,
+    "author": "elvis",
+    "email": "elvis@gmail.com",
+    "createdAt": "2025-11-06T17:53:50.640779"
+  },
+  {
+    "id": "264ca92f-c02c-4091-ab98-8356f2cf855e",
+    "category": "Produit - SmartPhone",
+    "comment": "téléphones trop chères",
+    "rating": 2,
+    "author": "louis",
+    "email": "louis@gmail.com",
+    "createdAt": "2025-11-06T17:54:27.666979"
+  },
+  {
+    "id": "84c1fe04-b2bb-42e9-b7a1-68e8218d4a13",
+    "category": "Événement Tech Summit",
+    "comment": "Je recommande",
+    "rating": 4,
+    "author": "emma",
+    "email": "emma@gmail.com",
+    "createdAt": "2025-11-06T17:55:42.007311"
+  },
+  {
+    "id": "23f3ca95-33b6-4a87-bae1-22d3d38b8d0b",
+    "category": "Formation React",
+    "comment": "Contente d'avoir suivie la formation. Merci beaucoup",
+    "rating": 5,
+    "author": "laure",
+    "email": "laure@gmail.com",
+    "createdAt": "2025-11-06T17:56:43.372207"
+  },
+  {
+    "id": "6d192888-d0ec-4a38-99c7-c6fd4df77b85",
+    "category": "Formation React",
+    "comment": "Formation enrichissante! Je vous conseil vivement. Je suis pleinement satisfaite",
+    "rating": 5,
+    "author": "Nelly",
+    "email": "nelly@gmail.com",
+    "createdAt": "2025-11-06T17:58:02.667898"
+  }
+]

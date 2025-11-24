@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* Boutons de navigation */
+.nav-btn {
+  background-color: #fff;
+  border: 2px solid #0072e6;
+  color: #0072e6;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+
+/* Effet au survol */
+.nav-btn:hover {
+  background-color: #0072e6;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Bouton actif (page actuelle) */
+.nav-btn.active {
+  background-color: #0072e6;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(0, 114, 230, 0.3);
+}
+
+/* Petit effet d'appui */
+.nav-btn:active {
+  transform: scale(0.98);
+}
+
