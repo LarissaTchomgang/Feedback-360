@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { FeedbackItem } from "../App";
 import FeedbackCard from "./FeedbackCard";
 import "../styles/FeedbackList.css";

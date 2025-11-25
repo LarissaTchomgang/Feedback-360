@@ -1,73 +1,228 @@
-# React + TypeScript + Vite
+# FeedBack360 — Documentation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application complète de collecte d’avis composée :
 
-Currently, two official plugins are available:
+- d’un **frontend** : React + Vite + TypeScript  
+- d’un **backend** : FastAPI (Python) via Passenger (o2switch)  
+- d’un **proxy PHP** utilisé pour contourner le WAF Tiger Protect / Imunify360 sur hébergement mutualisé
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+# ⚙️ 1. Architecture générale
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Frontend  
+- Framework : **React + Vite + TypeScript**  
+- Hébergé sur : `https://feedback.dt-verse.com`  
+- Build dans `dist/`, servi par Apache  
+- Accès API direct **ou** via proxy PHP `/api/proxy.php`
 
-## Expanding the ESLint configuration
+## Backend  
+- Framework : **FastAPI**  
+- Hébergé via Passenger sur : `https://api.dt-verse.com`  
+- Point d’entrée : `passenger_wsgi.py`  
+- Endpoints :
+  - `GET /feedbacks/`
+  - `POST /feedbacks/`
+  - `DELETE /feedbacks/{id}`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Proxy PHP  
+Utilisé lorsque le WAF empêche les requêtes front → backend.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Appels du frontend :
+```
+/api/proxy.php?path=/feedbacks/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 🧩 2. Installation locale (développement)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Prérequis
+- Node.js ≥ 18  
+- Python ≥ 3.10  
+- pip + virtualenv  
+
+---
+
+## Backend — Lancement local
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload --port 8000
 ```
+
+L’API sera disponible sur :  
+➡️ http://127.0.0.1:8000
+
+---
+
+## Frontend — Lancement local
+
+```bash
+cd frontend
+npm install
+
+echo "VITE_API_URL=http://localhost:8000" > .env
+
+npm run dev
+```
+
+Application :  
+➡️ http://localhost:5173
+
+---
+
+# 🔧 3. Variables d’environnement
+
+### Frontend : VITE_API_URL
+
+| Valeur | Comportement |
+|--------|--------------|
+| vide | utilise `/api/proxy.php?path=...` (proxy PHP) |
+| URL absolue (ex: https://api.dt-verse.com) | appel direct à l’API |
+
+---
+
+# 🚀 4. Déploiement sur o2switch
+
+## Backend — Passenger (api.dt-verse.com)
+
+1. cPanel → Setup Python App  
+2. Créer l’app Python  
+3. Chemin : `/home/.../fastapi-feedback360`  
+4. Installer dépendances :
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. Passenger doit lire `passenger_wsgi.py`
+
+Exemple .htaccess backend :
+```
+PassengerAppRoot "/home/USER/fastapi-feedback360"
+PassengerBaseURI "/"
+PassengerPython "/home/USER/virtualenv/fastapi-feedback360/3.12/bin/python"
+```
+
+Tester :
+```bash
+curl -i https://api.dt-verse.com/feedbacks/
+```
+
+---
+
+## Frontend — Apache (feedback.dt-verse.com)
+
+1. Build :
+   ```bash
+   npm run build
+   ```
+2. Déployer dist/ sur le serveur
+
+Arborescence :
+```
+feedback.dt-verse.com/
+  ├─ index.html
+  ├─ assets/
+  └─ api/
+      └─ proxy.php
+```
+
+### .htaccess (SPA + exclusion du proxy)
+```apache
+AcceptPathInfo On
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  RewriteRule ^api/ - [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
+---
+
+# 🔁 5. Proxy PHP
+
+Appels :
+```
+GET     /api/proxy.php?path=/feedbacks/
+POST    /api/proxy.php?path=/feedbacks/
+DELETE  /api/proxy.php?path=/feedbacks/<id>
+```
+
+---
+
+# 📡 6. Endpoints API
+
+## GET /feedbacks/
+Liste des feedbacks.
+
+## POST /feedbacks/
+Exemple :
+```json
+{
+  "category": "Formation React",
+  "comment": "Super",
+  "rating": 5,
+  "author": "Alice",
+  "email": "alice@example.com"
+}
+```
+
+## DELETE /feedbacks/{id}
+
+---
+
+# 🛠️ 7. Dépannage
+
+### “0 feedbacks” dans le frontend ?
+- Ouvrir DevTools → Network  
+- Vérifier l’URL, le status, le Content-Type
+
+Si la réponse commence par `<!doctype html>` → rewrite ou WAF.
+
+### Tester backend :
+```bash
+curl -i https://api.dt-verse.com/feedbacks/
+```
+
+### Tester proxy :
+```bash
+curl -i https://feedback.dt-verse.com/api/proxy.php?path=/feedbacks/
+```
+
+---
+
+# 📂 8. Structure recommandée
+
+```
+repo-root/
+├─ frontend/
+│  ├─ src/
+│  ├─ public/
+│  ├─ dist/
+│  ├─ package.json
+│  └─ .env
+│
+├─ backend/
+│  ├─ app/
+│  ├─ passenger_wsgi.py
+│  ├─ requirements.txt
+│  └─ venv/
+│
+└─ README.md
+```
+
+---
+
+# 🙌 Fin de la documentation

@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Navbar: React.FC<Props> = ({ page, setPage, total = 0 }) => {
-  const [count, setCount] = useState(total);
+  const [, setCount] = useState(total);
 
   // 🔁 Met à jour automatiquement le compteur si la prop "total" change
   useEffect(() => {

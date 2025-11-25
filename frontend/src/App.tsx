@@ -39,20 +39,25 @@ const App: React.FC = () => {
     fetchAll();
   }, []);
 
-// ✅ Ajouter un feedback en base
-const addFeedback = async (fb: Omit<FeedbackItem, "id" | "createdAt">) => {
-  try {
-    const newItem = await postFeedback(fb);
-    setFeedbacks((prev) => [newItem, ...prev]);
-    setPage("view");
-  } catch (err: any) {
-    // 🔥 Récupère le message du backend s’il existe
-    const message = err.message || "Erreur lors de l'ajout du feedback.";
-    alert(`❌ ${message}`);
-    console.error("Erreur lors de l'ajout du feedback:", err);
-  }
-};
-
+  // ✅ Ajouter un feedback en base
+  const addFeedback = async (fb: Omit<FeedbackItem, "id" | "createdAt">) => {
+    try {
+      const newItem = await postFeedback(fb);
+      if (newItem) {
+        setFeedbacks((prev) => [newItem, ...prev]);
+        setPage("view");
+      } else {
+        // Si l'API renvoie 204 ou null
+        alert("Le serveur a répondu sans contenu. Le feedback n'a pas été ajouté.");
+        console.warn("postFeedback returned null or empty");
+      }
+    } catch (err: any) {
+      // 🔥 Récupère le message du backend s’il existe
+      const message = err?.message || "Erreur lors de l'ajout du feedback.";
+      alert(`❌ ${message}`);
+      console.error("Erreur lors de l'ajout du feedback:", err);
+    }
+  };
 
   // ✅ Supprimer un feedback (backend + frontend)
   const deleteFeedback = async (id: string) => {
